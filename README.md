@@ -14,6 +14,7 @@
   	
 5)	Stop the program.
 # PROGRAM
+'''
 #include<stdio.h> 
 #include<ctype.h> 
 #include<stdlib.h> 
@@ -161,6 +162,7 @@ int main() {
     }
     return 0;
 }
+'''
 # OUTPUT
 Enter the expression & place; at the end 
  a+(b*c)
