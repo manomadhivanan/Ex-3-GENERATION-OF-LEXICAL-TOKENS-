@@ -164,8 +164,7 @@ int main() {
 }
 ```
 # OUTPUT
-<img width="285" alt="image" src="https://github.com/manomadhivanan/Ex-3-GENERATION-OF-LEXICAL-TOKENS-/assets/115543366/539b5190-b4dc-43a5-a57c-41878c650a6d">
-
+<img width="337" alt="image" src="https://github.com/manomadhivanan/Ex-3-GENERATION-OF-LEXICAL-TOKENS-/assets/115543366/309df541-b6f2-45a6-9678-922b4a423585">
 
 
 # RESULT
