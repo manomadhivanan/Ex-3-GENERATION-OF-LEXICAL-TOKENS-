@@ -14,156 +14,58 @@
   	
 5)	Stop the program.
 # PROGRAM
-```
-#include<stdio.h>
-#include<ctype.h>
-#include<stdlib.h>
-#include<string.h>
-
-#define SIZE 128
-#define NONE -1
-#define EOS '\0'
-#define NUM 256
-#define KEYWORD 257
-#define PAREN_OPEN 296
-#define PAREN_CLOSE 297
-#define ID 259
-#define ASSIGN 317
-#define DONE 262
-#define MAX 999
-
-char lexemes[MAX];
-char buffer[SIZE];
-int lastchar = -1;
-int lastentry = 0;
-int tokenval = NONE;
-int lineno = 1;
-
-struct entry {
-    char *lexptr;
-    int token;
-} symtable[100];
-
-struct entry keywords[] = {
-    {"if", KEYWORD},
-    {"else", KEYWORD},
-    {"for", KEYWORD},
-    {"int", KEYWORD},
-    {"float", KEYWORD},
-    {"double", KEYWORD},
-    {"char", KEYWORD},
-    {"struct", KEYWORD},
-    {"return", KEYWORD},
-    {0, 0}
-};
-
-void errormsg(char *m) {
-    fprintf(stderr, "line %d:%s\n", lineno, m);
-    exit(1);
+```#include<stdio.h>
+#include<conio.h> 
+#include<ctype.h> 
+#include<malloc.h> 
+#include<string.h> 
+#include<math.h>
+void main()
+{
+int i=0,j=0,x=0,n,flag=0; void *p,*add[5];
+char ch,srch,b[15],d[15],c; 
+printf("Enter the Expression terminated by $: ");
+while((c=getchar())!='$')
+{
+b[i]=c; i++;
 }
-
-int lookup(char s[]) {
-    int k;
-    for (k = lastentry; k > 0; k = k - 1)
-        if (strcmp(symtable[k].lexptr, s) == 0)
-            return k;
-    return 0;
+n=i-1;
+printf("Given Expression:"); i=0;
+while(i<=n)
+{
+printf("%c",b[i]); i++;
 }
-
-int insert(char s[], int tok) {
-    int len;
-    len = strlen(s);
-    if (lastentry + 1 >= MAX)
-        errormsg("symtable is full");
-    if (lastentry + len + 1 >= MAX)
-        errormsg("lexemes array is full");
-    lastentry = lastentry + 1;
-    symtable[lastentry].token = tok;
-    symtable[lastentry].lexptr = &lexemes[lastchar + 1];
-    lastchar = lastchar + len + 1;
-    strcpy(symtable[lastentry].lexptr, s);
-    return lastentry;
+printf("\n Symbol Table\n"); printf("Symbol\taddr\ttype"); while(j<=n)
+{
+c=b[j]; if(isalpha(toascii(c)))
+{
+if(j==n)
+{
+p=malloc(c); add[x]=p;
+d[x]=c;
+printf("%c\t%d\tidentifier",c,p);
 }
-
-void initialise() {
-    struct entry *ptr;
-    for (ptr = keywords; ptr->token; ptr++)
-        insert(ptr->lexptr, ptr->token);
+else
+{
+ch=b[j+1];
+if(ch=='+'||ch=='-'||ch=='*'||ch=="=")
+{
+p=malloc(c); add[x]=p;
+d[x]=c; printf("\n%c\t%d\tidentifier\n",c,p); x++;
+}}} j++;
 }
-
-int lexer() {
-    int t;
-    int val, i = 0;
-    while (1) {
-        t = getchar();
-        if (t == ' ' || t == '\t');
-        else if (t == '\n')
-            lineno = lineno + 1;
-        else if (t == '(')
-            return PAREN_OPEN;
-        else if (t == ')')
-            return PAREN_CLOSE;
-        else if (isdigit(t)) {
-            ungetc(t, stdin);
-            scanf("%d", &tokenval);
-            return NUM;
-        } else if (isalpha(t)) {
-            while (isalnum(t)) {
-                buffer[i] = t;
-                t = getchar();
-                i = i + 1;
-                if (i >= SIZE)
-                    errormsg("compiler error");
-            }
-            buffer[i] = EOS;
-            if (t != EOF)
-                ungetc(t, stdin);
-            val = lookup(buffer);
-            if (val == 0)
-                val = insert(buffer, ID);
-            tokenval = val;
-            return symtable[val].token;
-        } else if (t == EOF)
-            return DONE;
-        else {
-            tokenval = NONE;
-            return t;
-        }
-    }
+printf("\n The symbol is to be searched"); srch=getch();
+for(i=0;i<=x;i++)
+{
+if(srch==d[i])
+{
+printf("\n Symbol Found"); printf("\n%c%s%d\n",srch,"@address",add[i]); flag=1;
 }
-
-int main() {
-    int lookahead;
-    printf("\n \t \t Program for lexical analysis \n\n");
-    initialise();
-    printf("Enter the expression & place;at the end \n ");
-    lookahead = lexer();
-    while (lookahead != DONE) {
-        if (lookahead == NUM) {
-            printf("\n Number :%d", tokenval);
-        }
-        if (lookahead == '+' || lookahead == '-' || lookahead == '*' || lookahead == '/') {
-            printf("\n Operator:%c", lookahead);
-        }
-        if (lookahead == PAREN_OPEN)
-            printf("\n Parenthesis:%c", lookahead);
-        if (lookahead == PAREN_CLOSE)
-            printf("\n Parenthesis:%c", lookahead);
-        if (lookahead == ID)
-            printf("\n Identifier:%s", symtable[tokenval].lexptr);
-        if (lookahead == KEYWORD)
-            printf("\n Keyword");
-        if (lookahead == ASSIGN)
-            printf("\nAssignment Operator:%c", lookahead);
-        if (lookahead == '<' || lookahead == '>' || lookahead == '<=' || lookahead == '>=' || lookahead == '!=') 
-            printf("\nRelational Operator");
-        lookahead = lexer();
-    }
-    return 0;
 }
-
-
-
+if(flag==0)
+printf("\nSymbol Not Found"); 
+getch();
+}
 ```
 # OUTPUT
 <img width="285" alt="image" src="https://github.com/manomadhivanan/Ex-3-GENERATION-OF-LEXICAL-TOKENS-/assets/115543366/539b5190-b4dc-43a5-a57c-41878c650a6d">
