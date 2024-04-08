@@ -14,14 +14,14 @@
   	
 5)	Stop the program.
 # PROGRAM
-#include<stdio.h> -m
-#include<ctype.h> 
-#include<stdlib.h> 
+#include<stdio.h>
+#include<ctype.h>
+#include<stdlib.h>
 #include<string.h>
 
 #define SIZE 128
-#define NONE -1 
-#define EOS '\0' 
+#define NONE -1
+#define EOS '\0'
 #define NUM 256
 #define KEYWORD 257
 #define PAREN_OPEN 296
@@ -57,110 +57,110 @@ struct entry keywords[] = {
 };
 
 void errormsg(char *m) {
-    fprintf(stderr, "line %d:%s\n", lineno, m); 
+    fprintf(stderr, "line %d:%s\n", lineno, m);
     exit(1);
 }
 
 int lookup(char s[]) {
-    int k; 
-    for (k = lastentry; k > 0; k--) {
-        if (strcmp(symtable[k].lexptr, s) == 0) 
+    int k;
+    for (k = lastentry; k > 0; k = k - 1)
+        if (strcmp(symtable[k].lexptr, s) == 0)
             return k;
-    }
     return 0;
 }
 
 int insert(char s[], int tok) {
-    int len; 
+    int len;
     len = strlen(s);
     if (lastentry + 1 >= MAX)
         errormsg("symtable is full");
     if (lastentry + len + 1 >= MAX)
         errormsg("lexemes array is full");
-    lastentry = lastentry + 1; 
-    symtable[lastentry].token = tok; 
-    symtable[lastentry].lexptr = &lexemes[lastchar + 1]; 
-    lastchar = lastchar + len + 1; 
+    lastentry = lastentry + 1;
+    symtable[lastentry].token = tok;
+    symtable[lastentry].lexptr = &lexemes[lastchar + 1];
+    lastchar = lastchar + len + 1;
     strcpy(symtable[lastentry].lexptr, s);
     return lastentry;
 }
 
 void initialise() {
-    struct entry *ptr; 
+    struct entry *ptr;
     for (ptr = keywords; ptr->token; ptr++)
         insert(ptr->lexptr, ptr->token);
 }
 
 int lexer() {
-    int t, val, i = 0; 
+    int t;
+    int val, i = 0;
     while (1) {
-        t = getchar(); 
-        if (t == ' ' || t == '\t') 
-            continue; 
-        else if (t == '\n') 
-            lineno++;
-        else if (t == '(') 
-            return PAREN_OPEN; 
-        else if (t == ')') 
-            return PAREN_CLOSE; 
+        t = getchar();
+        if (t == ' ' || t == '\t');
+        else if (t == '\n')
+            lineno = lineno + 1;
+        else if (t == '(')
+            return PAREN_OPEN;
+        else if (t == ')')
+            return PAREN_CLOSE;
         else if (isdigit(t)) {
-            ungetc(t, stdin); 
-            scanf("%d", &tokenval); 
+            ungetc(t, stdin);
+            scanf("%d", &tokenval);
             return NUM;
-        }
-        else if (isalpha(t)) {
+        } else if (isalpha(t)) {
             while (isalnum(t)) {
-                buffer[i] = t; 
-                t = getchar(); 
-                i++; 
+                buffer[i] = t;
+                t = getchar();
+                i = i + 1;
                 if (i >= SIZE)
                     errormsg("compiler error");
             }
-            buffer[i] = EOS; 
+            buffer[i] = EOS;
             if (t != EOF)
-                ungetc(t, stdin); 
-            val = lookup(buffer); 
+                ungetc(t, stdin);
+            val = lookup(buffer);
             if (val == 0)
-                val = insert(buffer, ID); 
+                val = insert(buffer, ID);
             tokenval = val;
             return symtable[val].token;
-        }
-        else if (t == EOF)
+        } else if (t == EOF)
             return DONE;
         else {
-            tokenval = NONE; 
+            tokenval = NONE;
             return t;
         }
     }
 }
 
 int main() {
-    int lookahead; 
-    printf("\n \t \t Program for lexical analysis \n\n"); 
+    int lookahead;
+    printf("\n \t \t Program for lexical analysis \n\n");
     initialise();
-    printf("Enter the expression & place; at the end \n "); 
+    printf("Enter the expression & place;at the end \n ");
     lookahead = lexer();
     while (lookahead != DONE) {
-        if (lookahead == NUM)
+        if (lookahead == NUM) {
             printf("\n Number :%d", tokenval);
-        else if (lookahead == '+' || lookahead == '-' || lookahead == '*' || lookahead == '/')
+        }
+        if (lookahead == '+' || lookahead == '-' || lookahead == '*' || lookahead == '/') {
             printf("\n Operator:%c", lookahead);
-        else if (lookahead == PAREN_OPEN)
-            printf("\n Parenthesis:%c", lookahead); 
-        else if (lookahead == PAREN_CLOSE)
-            printf("\n Parenthesis:%c", lookahead); 
-        else if (lookahead == ID)
+        }
+        if (lookahead == PAREN_OPEN)
+            printf("\n Parenthesis:%c", lookahead);
+        if (lookahead == PAREN_CLOSE)
+            printf("\n Parenthesis:%c", lookahead);
+        if (lookahead == ID)
             printf("\n Identifier:%s", symtable[tokenval].lexptr);
-        else if (lookahead == KEYWORD)
+        if (lookahead == KEYWORD)
             printf("\n Keyword");
-        else if (lookahead == ASSIGN)
-            printf("\n Assignment Operator:%c", lookahead); 
-        else if (lookahead == '<' || lookahead == '>' || lookahead == '<=' || lookahead == '>=' || lookahead == '!=')
-            printf("\n Relational Operator"); 
+        if (lookahead == ASSIGN)
+            printf("\nAssignment Operator:%c", lookahead);
+        if (lookahead == '<' || lookahead == '>' || lookahead == '<=' || lookahead == '>=' || lookahead == '!=') 
+            printf("\nRelational Operator");
         lookahead = lexer();
     }
     return 0;
 }
+
 # OUTPUT
 Enter the expression & place; at the end 
  a+(b*c)
