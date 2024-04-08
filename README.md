@@ -164,9 +164,11 @@ int main() {
 
 
 
-``
+```
 # OUTPUT
-<img width="285" alt="image" src="https://github.com/manomadhivanan/Ex-3-GENERATION-OF-LEXICAL-TOKENS-/assets/115543366/c80b24e6-5e9d-4fb7-b1d2-14e8277b635c">
+<img width="285" alt="image" src="https://github.com/manomadhivanan/Ex-3-GENERATION-OF-LEXICAL-TOKENS-/assets/115543366/539b5190-b4dc-43a5-a57c-41878c650a6d">
+
+
 
 # RESULT
 ### The program to implement lexical analyzer is executed and the output is verified.
