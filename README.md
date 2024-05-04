@@ -1,4 +1,7 @@
 # Ex-3 GENERATION OF LEXICAL TOKENS USING C
+# NAME:MANO M
+# REGISTER NUMBER:212221040100
+# DATE:21.02.2024
 # AIM
 ## To write a C program to implement lexical analyzer to recognize a few patterns.
 # ALGORITHM
@@ -165,8 +168,9 @@ int main() {
 
 
 ```
+
 # OUTPUT
-<img width="282" alt="image" src="https://github.com/manomadhivanan/Ex-3-GENERATION-OF-LEXICAL-TOKENS-/assets/115543366/f085efc2-1a05-45c6-8169-aac7d71434f9">
+<img width="551" alt="image" src="https://github.com/manomadhivanan/Ex-3-GENERATION-OF-LEXICAL-TOKENS-/assets/115543366/93cc7ac7-0857-4cc5-8363-3bace8558293">
 
 # RESULT
-### The program to implement lexical analyzer is executed and the output is verified.
+The program to implement lexical analyzer is executed and the output is verified.
